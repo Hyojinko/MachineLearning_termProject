@@ -192,11 +192,11 @@ def AutoML(X, y=None, scale_col=None, encode_col=None, scalers=None, encoders=No
     if features is None:
         feature = [PCA(), RandomSelect(), CustomSelect()]
         customSelectParameter = [['BounceRates','ExitRates']
-            #,['BounceRates','PageValues'],['BounceRates','PageValues'],
-                              #   ['ExitRates','PageValues'],['ExitRates','VisitorType'],
-                              #   ['PageValues', 'VisitorType'],
-                              #   ['BounceRates','ExitRates','PageValues'],['BounceRates','ExitRates','VisitorType'],
-                              #   ['VisitorType','ExitRates','PageValues']
+            ,['BounceRates','PageValues'],['BounceRates','PageValues'],
+                                 ['ExitRates','PageValues'],['ExitRates','VisitorType'],
+                                 ['PageValues', 'VisitorType'],
+                                 ['BounceRates','ExitRates','PageValues'],['BounceRates','ExitRates','VisitorType'],
+                                 ['VisitorType','ExitRates','PageValues']
                                  ]
         feature_parameter = [[3, 4, 5], [3, 4, 5], customSelectParameter]
 
@@ -209,25 +209,25 @@ def AutoML(X, y=None, scale_col=None, encode_col=None, scalers=None, encoders=No
     gmm = GaussianMixture()
     meanshift = MeanShift()
 
-    model = {#"kmeans": kmeans,
-             #"gmm": gmm,
+    model = {"kmeans": kmeans,
+             "gmm": gmm,
              "meanshift": meanshift}
 
 
     # Set Model parameter
-    model_parameter = {#"kmeans":{'n_clusters': [2, 3, 4, 5], 'init': ["k-means++", "random"],
-                         #   'n_init': [1, 10, 20], 'random_state': [0, 1],
-                         #   'max_iter': [100, 200]},
+    model_parameter = {"kmeans":{'n_clusters': [2, 3, 4, 5], 'init': ["k-means++", "random"],
+                          'n_init': [1, 10, 20], 'random_state': [0, 1],
+                            'max_iter': [100, 200]},
 
                            # GMM(EM) Clustering
-                           #"gmm":{'n_components': [2, 3, 4, 5], 'max_iter': [100, 200],
-                           # 'covariance_type': ["spherical", "tied", "diag"],
-                           # 'n_init': [1, 10, 20], 'random_state': [0, 1], 'tol': [1e-5, 1e-3]},
+                           "gmm":{'n_components': [2, 3, 4, 5], 'max_iter': [100, 200],
+                            'covariance_type': ["spherical", "tied", "diag"],
+                            'n_init': [1, 10, 20], 'random_state': [0, 1], 'tol': [1e-5, 1e-3]},
 
 
                            # MeanShift
                            "meanshift":{"bandwidth": [1
-                                                      #,2,5
+                                                      ,2,5
                                                       ],
                                       "cluster_all": [True, False]}}
 
