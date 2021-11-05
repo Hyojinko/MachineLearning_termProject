@@ -10,7 +10,6 @@ import plotly.express as px
 from sklearn import metrics
 from sklearn.model_selection import RandomizedSearchCV, GridSearchCV
 from scipy.stats import stats
-from pyclustering.cluster.clarans import clarans
 from sklearn.mixture import GaussianMixture
 from sklearn.cluster import KMeans, MeanShift
 from sklearn.decomposition import PCA
@@ -211,12 +210,13 @@ def AutoML(X, y=None, scale_col=None, encode_col=None, scalers=None, encoders=No
 
     model = {"kmeans": kmeans,
              "gmm": gmm,
-             "meanshift": meanshift}
+             "meanshift": meanshift
+             }
 
 
     # Set Model parameter
     model_parameter = {"kmeans":{'n_clusters': [2, 3, 4, 5], 'init': ["k-means++", "random"],
-                          'n_init': [1, 10, 20], 'random_state': [0, 1],
+                            'n_init': [1, 10, 20], 'random_state': [0, 1],
                             'max_iter': [100, 200]},
 
                            # GMM(EM) Clustering
@@ -228,8 +228,8 @@ def AutoML(X, y=None, scale_col=None, encode_col=None, scalers=None, encoders=No
                            # MeanShift
                            "meanshift":{"bandwidth": [1
                                                       ,2,5
-                                                      ],
-                                      "cluster_all": [True, False]}}
+                                                      ],   "cluster_all": [True, False]}
+              }
 
     # Set Score
     if scores is None:
@@ -382,7 +382,7 @@ def AutoML(X, y=None, scale_col=None, encode_col=None, scalers=None, encoders=No
                 print("**** Apply feature selection ****\n")
                 print(df_new_score_and_encode)
 
-            df_values = df_new_score_and_encode.values
+            #df_values = df_new_score_and_encode.values
 
             # model fitting
             if firstScoreModel[a][b] is not None:
@@ -391,10 +391,10 @@ def AutoML(X, y=None, scale_col=None, encode_col=None, scalers=None, encoders=No
                 # print("**** Predicted Value ****\n")
                 # print(pred_val)
 
-            min_y = np.min(y)
-            max_y = np.max(y)
-            gap = max_y - min_y
-            gap /= len(np.unique(pred_val))
+            #min_y = np.min(y)
+           # max_y = np.max(y)
+            #gap = np.subtract(max_y, min_y)
+            #gap /= len(np.unique(pred_val))
 
             labels = []
             for i in range(len(np.unique(pred_val))):
@@ -455,7 +455,7 @@ def AutoML(X, y=None, scale_col=None, encode_col=None, scalers=None, encoders=No
         # feature values in the original dataset
 
         # Without target value
-        model = secondScoreModel[i]
+        #model = secondScoreModel[i]
         print(secondScoreScaler[i])
         print(secondScoreEncoder[i])
         print(secondScoreFeature[i])
